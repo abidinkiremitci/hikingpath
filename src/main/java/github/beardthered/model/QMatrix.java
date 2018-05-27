@@ -73,8 +73,12 @@ public class QMatrix {
     public void setImmediateReward(int xCoor, int yCoor, Action action, double reward) {
         // Check if the cell is in bounds
         if ((xCoor >= 0 && xCoor < nValue) && (yCoor >= 0 && yCoor < nValue) ) {
-            setImmediateReward(CoorStateConverter.toStateIndex(nValue, xCoor, yCoor), action, reward);
+            setImmediateReward(Coordinate.toStateIndex(nValue, xCoor, yCoor), action, reward);
         }
+    }
+
+    public void setImmediateReward(Coordinate coordinate, Action action, double reward) {
+        setImmediateReward(coordinate.getX(), coordinate.getY(), action, reward);
     }
 
     public void setImmediateReward(int state, Action action, double reward) {

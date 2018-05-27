@@ -11,7 +11,8 @@ public class Agent {
     private Random random;
     private double agentRandomMoveChance;
 
-    public Agent(int nValue, QMatrix qMatrix, double agentRandomMoveChance) {
+    public Agent(int nValue, int start, QMatrix qMatrix, double agentRandomMoveChance) {
+        this.currentState = start;
         this.nValue = nValue;
         this.qMatrix = qMatrix;
         this.agentRandomMoveChance = agentRandomMoveChance;

@@ -36,26 +36,40 @@ public class MapCell extends JPanel {
         this.qMatrix = qMatrix;
         this.state = state;
         this.numFormat = new DecimalFormat("#.####");
-        initCell(maze.getTerrainType(state));
-        initLabels();
+        initCell(maze);
+        initLabels(maze);
     }
 
-    private void initCell(TerrainType type) {
+    private void initCell(Maze maze) {
         setLayout(new GridLayout(NUM_ROWS, NUM_COLS));
         setBorder(new LineBorder(Color.BLACK, BORDER_THICKNESS));
-        initBackgroundColor(type);
+        initBackgroundColor(maze);
     }
 
-    private void initBackgroundColor(TerrainType type) {
-        if (type == TerrainType.GROUND) {
+    private void initBackgroundColor(Maze maze) {
+        if (maze.getTerrainType(state) == TerrainType.GROUND) {
             setBackground(Color.WHITE);
         } else {
-            setBackground(new Color(204, 120, 50));
+            setBackground(Color.GREEN);
         }
+        if (state == maze.getGoal()) {
+            setBackground(new Color(0, 202, 204));
+        }
+        if (state == maze.getStart()) {
+            setBackground(Color.YELLOW);
+        }
+
     }
 
-    private void initLabels() {
-        stateLabel = new JLabel("State #" + state);
+    private void initLabels(Maze maze) {
+
+        if (state == maze.getGoal()) {
+            stateLabel = new JLabel("GOAL");
+        } else if (state == maze.getStart()) {
+            stateLabel = new JLabel("START");
+        } else {
+            stateLabel = new JLabel("State #" + state);
+        }
         stateLabel.setForeground(Color.BLUE);
         this.add(stateLabel);
         rightRewardLabel = new JLabel("R: ");
@@ -97,7 +111,7 @@ public class MapCell extends JPanel {
         if (qValue == -Double.MAX_VALUE) {
             label.setText(action.text + "-Inf");
         } else {
-            label.setText(action.text + numFormat.format(qValue));
+            label.setText(action.text + numFormat.format(qValue + 10));
         }
         if(qValue > currentMaxReward) {
             currentMaxReward = qValue;
